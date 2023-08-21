@@ -31,7 +31,10 @@ namespace WinUI
             }
 
             var frequency = this.dataProvider.GetFrequenceByNumber(number);
-            MessageBox.Show($"Frequency for {number} is {frequency}");
+            var textToShow = frequency.HasValue
+                ? $"Frequency for {number} is {frequency}"
+                : $"Number {number} not exists";
+            MessageBox.Show(textToShow);
         }
 
         private void getNumbersByFrequenceBtn_Click(object sender, EventArgs e)
@@ -43,7 +46,7 @@ namespace WinUI
             }
 
             var numbers = this.dataProvider.GetNumberByFrequence(frequency);
-            this.numbersByFrequenceRtb.Text = numbers.Count() > 0
+            this.numbersByFrequenceRtb.Text = numbers.Any()
                 ? string.Join(", ", numbers)
                 : $"Values for frequency {frequency} not found";
         }
